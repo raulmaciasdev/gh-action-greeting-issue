@@ -7,6 +7,13 @@ on:
 jobs:
   test-saludo:
     runs-on: ubuntu-latest
+
+    # ─── ESTO ES LO QUE SOLUCIONA EL ERROR ───
+    permissions:
+      issues: write      # Permite a tu código JS crear el comentario
+      contents: read     # Permite a actions/checkout descargar el código
+    # ─────────────────────────────────────────
+
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4

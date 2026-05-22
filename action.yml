@@ -1,0 +1,10 @@
+name: 'Saludar al creador del Issue'
+description: 'Responde automáticamente con un saludo al usuario que abre un issue'
+author: 'raulmaciasdev'
+inputs:
+  github-token:
+    description: 'Token automático de GitHub para interactuar con la API'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

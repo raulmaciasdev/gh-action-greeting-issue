@@ -1,0 +1,17 @@
+name: Prueba de Saludo
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  test-saludo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar nuestra acción local
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

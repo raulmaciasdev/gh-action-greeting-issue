@@ -2,10 +2,11 @@ name: Recordatorio Horario
 
 on:
   schedule:
-    # Se ejecuta al minuto 0 de cada hora
     - cron: '0 * * * *'
-  # Te permite ejecutarlo manualmente desde la pestaña Actions
   workflow_dispatch:
+  # Añadimos el activador externo
+  repository_dispatch:
+    types: [activacion_manual_externa]
 
 jobs:
   reporte-horario:
@@ -14,18 +15,20 @@ jobs:
       - name: Instalar herramientas de información
         run: |
           sudo apt-get update
-          # Instalamos neofetch (o fastfetch si prefieres el clon moderno en C)
           sudo apt-get install -y neofetch
 
       - name: Ejecutar script de saludo y Neofetch
         run: |
-          echo "¡Hola! Este es un mensaje automático que se ejecuta cada hora en punto."
+          echo "¡Hola! Este flujo ha sido activado."
           echo "La hora actual en el servidor es: $(date)"
           echo "--------------------------------------------------"
-          
-          # Imprimimos el logo de Ubuntu con toda la info del sistema
           neofetch --off
-          
           echo "--------------------------------------------------"
-          echo "Versión de Node.js instalada por defecto:"
+          echo "Versión de Node.js:"
           node -v
+          
+      # PASO EXTRA: Leer datos enviados desde fuera (Opcional)
+      - name: Mostrar datos personalizados enviados en la petición
+        run: |
+          echo "Mensaje recibido: ${{ github.event.client_payload.mensaje }}"
+          echo "Enviado por: ${{ github.event.client_payload.usuario }}"

@@ -8,3 +8,8 @@ inputs:
 runs:
   using: 'node24'
   main: 'dist/index.js'
+
+# ─── CONFIGURACIÓN DE BRANDING ───
+branding:
+  icon: 'terminal'
+  color: 'green'

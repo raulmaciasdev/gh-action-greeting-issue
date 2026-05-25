@@ -2,19 +2,15 @@ name: Recordatorio Horario
 
 on:
   schedule:
-    # Se ejecuta al minuto 0 de cada hora (* * * *)
+    # Se ejecuta al minuto 0 de cada hora
     - cron: '0 * * * *'
-  # Truco extra: Te permite ejecutarlo manualmente desde la pestaña Actions para probarlo sin esperar una hora
+  # Te permite ejecutarlo manualmente desde la pestaña Actions
   workflow_dispatch:
 
 jobs:
   reporte-horario:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
-
       - name: Ejecutar script de saludo
         run: |
           echo "¡Hola! Este es un mensaje automático que se ejecuta cada hora en punto."

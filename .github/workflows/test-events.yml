@@ -1,0 +1,24 @@
+name: Probar Desencadenadores de Flujo de Trabajo
+
+# Definimos múltiples formas de activar este flujo de trabajo
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Esto permite activarlo manualmente desde la interfaz de GitHub
+
+jobs:
+  debug-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar el evento desencadenador ( github.event_name )
+        run: |
+          echo "============================================="
+          echo "El flujo de trabajo fue activado por el evento: ${{ github.event_name }}"
+          echo "============================================="
+
+      - name: Ver detalles completos del contexto del evento (Opcional)
+        run: |
+          echo "Actor que lo provocó: ${{ github.actor }}"
+          echo "SHA de la confirmación: ${{ github.sha }}"

@@ -2,20 +2,33 @@ name: Recordatorio Horario
 
 on:
   schedule:
-    # Se ejecuta al minuto 0 de cada hora (* * * *)
     - cron: '0 * * * *'
-  # Truco extra: Te permite ejecutarlo manualmente desde la pestaña Actions para probarlo sin esperar una hora
   workflow_dispatch:
+  # Añadimos el activador externo
+  repository_dispatch:
+    types: [activacion_manual_externa]
 
 jobs:
   reporte-horario:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
-
-      - name: Ejecutar script de saludo
+      - name: Instalar herramientas de información
         run: |
-          echo "¡Hola! Este es un mensaje automático que se ejecuta cada hora en punto."
+          sudo apt-get update
+          sudo apt-get install -y neofetch
+
+      - name: Ejecutar script de saludo y Neofetch
+        run: |
+          echo "¡Hola! Este flujo ha sido activado."
           echo "La hora actual en el servidor es: $(date)"
+          echo "--------------------------------------------------"
+          neofetch --off
+          echo "--------------------------------------------------"
+          echo "Versión de Node.js:"
+          node -v
+          
+      # PASO EXTRA: Leer datos enviados desde fuera (Opcional)
+      - name: Mostrar datos personalizados enviados en la petición
+        run: |
+          echo "Mensaje recibido: ${{ github.event.client_payload.mensaje }}"
+          echo "Enviado por: ${{ github.event.client_payload.usuario }}"
